@@ -2,7 +2,6 @@
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Pipelines.GetDependencies;
 using Sitecore.Data;
-using Sitecore.Data.Databases;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.SecurityModel;
@@ -16,10 +15,6 @@ namespace Sitecore.Support.ContentSearch
 {
     public class SitecoreItemCrawler : Sitecore.ContentSearch.SitecoreItemCrawler
     {
-        public SitecoreItemCrawler()
-        {
-        }
-
         private bool IsRootOrDescendant(ID id)
         {
             if (this.RootItem.ID == id)
@@ -54,7 +49,7 @@ namespace Sitecore.Support.ContentSearch
                             ((Crawler<SitecoreIndexableItem>)this).Delete(context, indexableUniqueId, (IndexingOptions)0);
                             return;
                         }
-                      this.UpdateHierarchicalRecursive(context, new SitecoreIndexableItem(obj), CancellationToken.None);
+                        this.UpdateHierarchicalRecursive(context, new SitecoreIndexableItem(obj), CancellationToken.None);
                         return;
                     }
                 }
@@ -143,28 +138,4 @@ namespace Sitecore.Support.ContentSearch
         }
     }
 
-}
-
-namespace Sitecore.Support.ContentSearch
-{
-    using System.Collections.Concurrent;
-
-    public interface IProviderUpdateContextEx
-    {
-        ConcurrentDictionary<IIndexableUniqueId, object> Processed { get; set; }
-    }
-}
-
-
-namespace Sitecore.Support
-{
-    using Shell.Framework.Pipelines;
-
-    public class Custom : CloneItems
-    {
-        public void Do(CopyItemsArgs args)
-        {
-            Log.Info("Test", (object)this);
-        }
-    }
 }
